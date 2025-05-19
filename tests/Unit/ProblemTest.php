@@ -49,7 +49,7 @@ final class ProblemTest extends TestCase
 			'details' => [[
 				'@type' => 'FieldViolations',
 				'severity' => 'error',
-				'fieldViolations' => [
+				'violations' => [
 					[
 						'field' => 'name',
 						'messages' => ['Name is required'],

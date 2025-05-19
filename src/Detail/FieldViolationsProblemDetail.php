@@ -9,10 +9,10 @@ final readonly class FieldViolationsProblemDetail implements ProblemDetail
 {
 
 	/**
-	 * @param list<FieldViolation> $fieldViolations
+	 * @param list<FieldViolation> $violations
 	 */
 	public function __construct(
-		private array $fieldViolations,
+		private array $violations,
 		private FieldViolationsSeverity $severity = FieldViolationsSeverity::Error,
 	)
 	{
@@ -25,7 +25,7 @@ final readonly class FieldViolationsProblemDetail implements ProblemDetail
 
 	public function isValid(): bool
 	{
-		return (bool) $this->fieldViolations;
+		return (bool) $this->violations;
 	}
 
 	public function isSensitive(): bool
@@ -41,9 +41,9 @@ final readonly class FieldViolationsProblemDetail implements ProblemDetail
 		return [
 			'@type' => $this->getType(),
 			'severity' => $this->severity->value,
-			'fieldViolations' => array_map(
+			'violations' => array_map(
 				fn (FieldViolation $violation): array => $violation->toArray(),
-				$this->fieldViolations,
+				$this->violations,
 			),
 		];
 	}

@@ -19,7 +19,7 @@ final class DetailsTest extends TestCase
 		$this->assertSame([
 			'@type' => 'FieldViolations',
 			'severity' => 'error',
-			'fieldViolations' => [
+			'violations' => [
 				[
 					'field' => 'name',
 					'messages' => ['Name is required'],
