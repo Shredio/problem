@@ -2,7 +2,7 @@
 
 namespace Tests\Unit;
 
-use Shredio\Problem\Detail\FieldViolationsProblemDetail;
+use Shredio\Problem\Detail\ValidationProblemDetail;
 use Shredio\Problem\Problem;
 use Shredio\Problem\ProblemDetails;
 use Shredio\Problem\Violation\FieldViolation;
@@ -35,7 +35,7 @@ final class ProblemTest extends TestCase
 			'The request was invalid',
 			'BAD_REQUEST',
 			new ProblemDetails([
-				new FieldViolationsProblemDetail([
+				new ValidationProblemDetail([
 					new FieldViolation('name', ['Name is required']),
 				]),
 			]),
@@ -47,7 +47,7 @@ final class ProblemTest extends TestCase
 			'status' => 'BAD_REQUEST',
 			'fatal' => true,
 			'details' => [[
-				'@type' => 'FieldViolations',
+				'@type' => ValidationProblemDetail::Type,
 				'severity' => 'error',
 				'violations' => [
 					[

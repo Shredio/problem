@@ -2,7 +2,7 @@
 
 namespace Tests\Unit;
 
-use Shredio\Problem\Detail\FieldViolationsProblemDetail;
+use Shredio\Problem\Detail\ValidationProblemDetail;
 use Shredio\Problem\Violation\FieldViolation;
 use Tests\TestCase;
 
@@ -11,13 +11,13 @@ final class DetailsTest extends TestCase
 
 	public function testFieldViolations(): void
 	{
-		$detail = new FieldViolationsProblemDetail([
+		$detail = new ValidationProblemDetail([
 			new FieldViolation('name', ['Name is required']),
 			new FieldViolation('email', ['Email is invalid']),
 		]);
 
 		$this->assertSame([
-			'@type' => 'FieldViolations',
+			'@type' => ValidationProblemDetail::Type,
 			'severity' => 'error',
 			'violations' => [
 				[
@@ -29,7 +29,7 @@ final class DetailsTest extends TestCase
 					'messages' => ['Email is invalid'],
 				],
 			],
-		],$detail->toArray());
+		], $detail->toArray());
 	}
 
 }

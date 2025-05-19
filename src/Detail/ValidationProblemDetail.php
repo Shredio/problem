@@ -2,25 +2,27 @@
 
 namespace Shredio\Problem\Detail;
 
-use Shredio\Problem\Detail\Enum\FieldViolationsSeverity;
+use Shredio\Problem\Detail\Enum\ValidationSeverity;
 use Shredio\Problem\Violation\FieldViolation;
 
-final readonly class FieldViolationsProblemDetail implements ProblemDetail
+final readonly class ValidationProblemDetail implements ProblemDetail
 {
+
+	public const string Type = 'Validation';
 
 	/**
 	 * @param list<FieldViolation> $violations
 	 */
 	public function __construct(
 		private array $violations,
-		private FieldViolationsSeverity $severity = FieldViolationsSeverity::Error,
+		private ValidationSeverity $severity = ValidationSeverity::Error,
 	)
 	{
 	}
 
 	public function getType(): string
 	{
-		return 'FieldViolations';
+		return self::Type;
 	}
 
 	public function isValid(): bool

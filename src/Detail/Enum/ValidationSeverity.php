@@ -2,7 +2,7 @@
 
 namespace Shredio\Problem\Detail\Enum;
 
-enum FieldViolationsSeverity: string
+enum ValidationSeverity: string
 {
 
 	case Error = 'error';
