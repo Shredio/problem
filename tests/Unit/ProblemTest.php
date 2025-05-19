@@ -16,13 +16,11 @@ final class ProblemTest extends TestCase
 		$problem = new Problem(
 			400,
 			'The request was invalid',
-			'BAD_REQUEST',
 		);
 
 		$this->assertSame([
 			'code' => 400,
 			'message' => 'The request was invalid',
-			'status' => 'BAD_REQUEST',
 			'fatal' => true,
 			'details' => [],
 		], $problem->toArray());
@@ -33,7 +31,6 @@ final class ProblemTest extends TestCase
 		$problem = new Problem(
 			400,
 			'The request was invalid',
-			'BAD_REQUEST',
 			new ProblemDetails([
 				new ValidationProblemDetail([
 					new FieldViolation('name', ['Name is required']),
@@ -44,7 +41,6 @@ final class ProblemTest extends TestCase
 		$this->assertSame([
 			'code' => 400,
 			'message' => 'The request was invalid',
-			'status' => 'BAD_REQUEST',
 			'fatal' => true,
 			'details' => [[
 				'@type' => ValidationProblemDetail::Type,

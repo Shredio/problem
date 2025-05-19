@@ -10,7 +10,6 @@ final readonly class Problem implements JsonSerializable
 	public function __construct(
 		public int $code,
 		public string $message,
-		public string $status,
 		public ?ProblemDetails $details = null,
 		public bool $fatal = true,
 	)
@@ -32,7 +31,6 @@ final readonly class Problem implements JsonSerializable
 		return [
 			'code' => $this->code,
 			'message' => $this->message,
-			'status' => $this->status,
 			'fatal' => $this->fatal,
 			'details' => $details,
 		];
