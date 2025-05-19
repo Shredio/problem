@@ -23,6 +23,7 @@ final class ProblemTest extends TestCase
 			'code' => 400,
 			'message' => 'The request was invalid',
 			'status' => 'BAD_REQUEST',
+			'fatal' => true,
 			'details' => [],
 		], $problem->toArray());
 	}
@@ -44,6 +45,7 @@ final class ProblemTest extends TestCase
 			'code' => 400,
 			'message' => 'The request was invalid',
 			'status' => 'BAD_REQUEST',
+			'fatal' => true,
 			'details' => [[
 				'@type' => 'FieldViolations',
 				'severity' => 'error',

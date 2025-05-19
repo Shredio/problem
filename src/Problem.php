@@ -12,6 +12,7 @@ final readonly class Problem implements JsonSerializable
 		public string $message,
 		public string $status,
 		public ?ProblemDetails $details = null,
+		public bool $fatal = true,
 	)
 	{
 	}
@@ -32,6 +33,7 @@ final readonly class Problem implements JsonSerializable
 			'code' => $this->code,
 			'message' => $this->message,
 			'status' => $this->status,
+			'fatal' => $this->fatal,
 			'details' => $details,
 		];
 	}
