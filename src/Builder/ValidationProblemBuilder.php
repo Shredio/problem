@@ -7,11 +7,13 @@ use Shredio\Problem\Detail\ValidationProblemDetail;
 use Shredio\Problem\Problem;
 use Shredio\Problem\ProblemDetails;
 use Shredio\Problem\Violation\FieldViolation;
+use Shredio\Problem\Violation\GlobalViolation;
+use Shredio\Problem\Violation\Violation;
 
 final class ValidationProblemBuilder
 {
 
-	/** @var array<value-of<ValidationSeverity>, list<FieldViolation>> */
+	/** @var array<value-of<ValidationSeverity>, list<Violation>> */
 	private array $violations = [];
 
 	private ?bool $fatal = null;
@@ -23,7 +25,7 @@ final class ValidationProblemBuilder
 	/**
 	 * @param list<string> $messages
 	 */
-	public function addViolation(
+	public function addFieldViolation(
 		string $field,
 		array $messages,
 		ValidationSeverity $severity = ValidationSeverity::Error,
@@ -33,6 +35,19 @@ final class ValidationProblemBuilder
 			field: $field,
 			messages: $messages,
 		);
+
+		return $this;
+	}
+
+	/**
+	 * @param list<string> $messages
+	 */
+	public function addViolation(
+		array $messages,
+		ValidationSeverity $severity = ValidationSeverity::Error,
+	): self
+	{
+		$this->violations[$severity->value][] = new GlobalViolation($messages);
 
 		return $this;
 	}

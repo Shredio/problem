@@ -6,11 +6,13 @@ use Shredio\Problem\Detail\BadRequestProblemDetail;
 use Shredio\Problem\Problem;
 use Shredio\Problem\ProblemDetails;
 use Shredio\Problem\Violation\FieldViolation;
+use Shredio\Problem\Violation\GlobalViolation;
+use Shredio\Problem\Violation\Violation;
 
 final class BadRequestProblemBuilder
 {
 
-	/** @var list<FieldViolation> */
+	/** @var list<Violation> */
 	private array $violations = [];
 
 	private int $code = 400;
@@ -20,7 +22,7 @@ final class BadRequestProblemBuilder
 	/**
 	 * @param list<string> $messages
 	 */
-	public function addViolation(
+	public function addFieldViolation(
 		string $field,
 		array $messages,
 	): self
@@ -29,6 +31,18 @@ final class BadRequestProblemBuilder
 			field: $field,
 			messages: $messages,
 		);
+
+		return $this;
+	}
+
+	/**
+	 * @param list<string> $messages
+	 */
+	public function addViolation(
+		array $messages,
+	): self
+	{
+		$this->violations[] = new GlobalViolation($messages);
 
 		return $this;
 	}

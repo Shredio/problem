@@ -2,14 +2,13 @@
 
 namespace Shredio\Problem\Violation;
 
-final readonly class FieldViolation implements Violation
+final readonly class GlobalViolation implements Violation
 {
 
 	/**
 	 * @param list<string> $messages
 	 */
 	public function __construct(
-		public string $field,
 		public array $messages,
 	)
 	{
@@ -21,7 +20,6 @@ final readonly class FieldViolation implements Violation
 	public function toArray(): array
 	{
 		return [
-			'field' => $this->field,
 			'messages' => $this->messages,
 		];
 	}

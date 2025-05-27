@@ -2,7 +2,7 @@
 
 namespace Shredio\Problem\Detail;
 
-use Shredio\Problem\Violation\FieldViolation;
+use Shredio\Problem\Violation\Violation;
 
 final readonly class BadRequestProblemDetail implements ProblemDetail
 {
@@ -10,7 +10,7 @@ final readonly class BadRequestProblemDetail implements ProblemDetail
 	public const string Type = 'BadRequest';
 
 	/**
-	 * @param list<FieldViolation> $violations
+	 * @param list<Violation> $violations
 	 */
 	public function __construct(
 		private array $violations,
@@ -41,7 +41,7 @@ final readonly class BadRequestProblemDetail implements ProblemDetail
 		return [
 			'@type' => $this->getType(),
 			'violations' => array_map(
-				fn (FieldViolation $violation): array => $violation->toArray(),
+				fn (Violation $violation): array => $violation->toArray(),
 				$this->violations,
 			),
 		];

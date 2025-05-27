@@ -3,7 +3,7 @@
 namespace Shredio\Problem\Detail;
 
 use Shredio\Problem\Detail\Enum\ValidationSeverity;
-use Shredio\Problem\Violation\FieldViolation;
+use Shredio\Problem\Violation\Violation;
 
 final readonly class ValidationProblemDetail implements ProblemDetail
 {
@@ -11,7 +11,7 @@ final readonly class ValidationProblemDetail implements ProblemDetail
 	public const string Type = 'Validation';
 
 	/**
-	 * @param list<FieldViolation> $violations
+	 * @param list<Violation> $violations
 	 */
 	public function __construct(
 		private array $violations,
@@ -44,7 +44,7 @@ final readonly class ValidationProblemDetail implements ProblemDetail
 			'@type' => $this->getType(),
 			'severity' => $this->severity->value,
 			'violations' => array_map(
-				fn (FieldViolation $violation): array => $violation->toArray(),
+				fn (Violation $violation): array => $violation->toArray(),
 				$this->violations,
 			),
 		];
