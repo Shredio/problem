@@ -2,7 +2,9 @@
 
 namespace Shredio\Problem\Violation;
 
-interface Violation
+use Stringable;
+
+interface Violation extends Stringable
 {
 
 	/**

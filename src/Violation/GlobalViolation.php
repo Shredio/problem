@@ -24,4 +24,9 @@ final readonly class GlobalViolation implements Violation
 		];
 	}
 
+	public function __toString(): string
+	{
+		return implode(' ', $this->messages);
+	}
+
 }

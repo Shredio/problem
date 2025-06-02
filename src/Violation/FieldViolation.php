@@ -26,4 +26,9 @@ final readonly class FieldViolation implements Violation
 		];
 	}
 
+	public function __toString(): string
+	{
+		return sprintf('%s: %s', $this->field, implode(' ', $this->messages));
+	}
+
 }
