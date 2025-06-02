@@ -23,6 +23,20 @@ final class ValidationProblemBuilder
 	private string $message = 'Validation failed.';
 
 	/**
+	 * Adds a list of violations to the builder.
+	 *
+	 * @param iterable<Violation> $violations
+	 */
+	public function addList(iterable $violations, ValidationSeverity $severity = ValidationSeverity::Error): self
+	{
+		foreach ($violations as $violation) {
+			$this->violations[$severity->value][] = $violation;
+		}
+
+		return $this;
+	}
+
+	/**
 	 * @param list<string> $messages
 	 */
 	public function addFieldViolation(

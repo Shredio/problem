@@ -20,6 +20,20 @@ final class BadRequestProblemBuilder
 	private string $message = 'Invalid request.';
 
 	/**
+	 * Adds a list of violations to the builder.
+	 *
+	 * @param iterable<Violation> $violations
+	 */
+	public function addList(iterable $violations): self
+	{
+		foreach ($violations as $violation) {
+			$this->violations[] = $violation;
+		}
+
+		return $this;
+	}
+
+	/**
 	 * @param list<string> $messages
 	 */
 	public function addFieldViolation(
