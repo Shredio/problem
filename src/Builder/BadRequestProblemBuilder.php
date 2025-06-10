@@ -8,6 +8,7 @@ use Shredio\Problem\ProblemDetails;
 use Shredio\Problem\Violation\FieldViolation;
 use Shredio\Problem\Violation\GlobalViolation;
 use Shredio\Problem\Violation\Violation;
+use Stringable;
 
 final class BadRequestProblemBuilder
 {
@@ -34,7 +35,7 @@ final class BadRequestProblemBuilder
 	}
 
 	/**
-	 * @param list<string> $messages
+	 * @param list<string|Stringable> $messages
 	 */
 	public function addFieldViolation(
 		string $field,
@@ -50,7 +51,7 @@ final class BadRequestProblemBuilder
 	}
 
 	/**
-	 * @param list<string> $messages
+	 * @param list<string|Stringable> $messages
 	 */
 	public function addViolation(
 		array $messages,
