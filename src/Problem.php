@@ -3,6 +3,7 @@
 namespace Shredio\Problem;
 
 use JsonSerializable;
+use Stringable;
 
 final readonly class Problem implements JsonSerializable
 {
@@ -18,14 +19,15 @@ final readonly class Problem implements JsonSerializable
 
 	/**
 	 * @param bool $sanitize Indicates whether the result should be sanitized before being returned.
+	 * @param (callable(Stringable): string)|null $stringify Optional callback to stringify Stringable objects in the details.
 	 * @return mixed[]
 	 */
-	public function toArray(bool $sanitize = true): array
+	public function toArray(bool $sanitize = true, ?callable $stringify = null): array
 	{
 		if (!$this->details) {
 			$details = [];
 		} else {
-			$details = $this->details->toArray($sanitize);
+			$details = $this->details->toArray($sanitize, $stringify);
 		}
 
 		return [

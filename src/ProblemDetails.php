@@ -3,6 +3,7 @@
 namespace Shredio\Problem;
 
 use Shredio\Problem\Detail\ProblemDetail;
+use Stringable;
 
 final class ProblemDetails
 {
@@ -48,9 +49,11 @@ final class ProblemDetails
 	}
 
 	/**
+	 * @param bool $sanitize Indicates whether the result should be sanitized before being returned.
+	 * @param (callable(Stringable): string)|null $stringify Optional callback to stringify Stringable objects in the details.
 	 * @return mixed[]
 	 */
-	public function toArray(bool $sanitize = true): array
+	public function toArray(bool $sanitize = true, ?callable $stringify = null): array
 	{
 		$details = [];
 
@@ -59,7 +62,7 @@ final class ProblemDetails
 				continue;
 			}
 
-			$details[] = $detail->toArray($sanitize);
+			$details[] = $detail->toArray($sanitize, $stringify);
 		}
 
 		return $details;

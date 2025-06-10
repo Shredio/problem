@@ -2,11 +2,14 @@
 
 namespace Shredio\Problem\Violation;
 
+use Shredio\Problem\Helper\ProblemHelper;
+use Stringable;
+
 final readonly class GlobalViolation implements Violation
 {
 
 	/**
-	 * @param list<string> $messages
+	 * @param list<string|Stringable> $messages
 	 */
 	public function __construct(
 		public array $messages,
@@ -17,10 +20,10 @@ final readonly class GlobalViolation implements Violation
 	/**
 	 * @return mixed[]
 	 */
-	public function toArray(): array
+	public function toArray(?callable $stringify = null): array
 	{
 		return [
-			'messages' => $this->messages,
+			'messages' => ProblemHelper::stringifyStringables($this->messages, $stringify),
 		];
 	}
 

@@ -8,8 +8,9 @@ interface Violation extends Stringable
 {
 
 	/**
+	 * @param (callable(Stringable): string)|null $stringify Optional callback to stringify Stringable objects in the details.
 	 * @return mixed[]
 	 */
-	public function toArray(): array;
+	public function toArray(?callable $stringify = null): array;
 
 }

@@ -38,13 +38,13 @@ final readonly class ValidationProblemDetail implements ProblemDetail
 	/**
 	 * @return mixed[]
 	 */
-	public function toArray(bool $sanitize = true): array
+	public function toArray(bool $sanitize = true, ?callable $stringify = null): array
 	{
 		return [
 			'@type' => $this->getType(),
 			'severity' => $this->severity->value,
 			'violations' => array_map(
-				fn (Violation $violation): array => $violation->toArray(),
+				fn (Violation $violation): array => $violation->toArray($stringify),
 				$this->violations,
 			),
 		];

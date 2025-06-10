@@ -2,6 +2,8 @@
 
 namespace Shredio\Problem\Detail;
 
+use Stringable;
+
 interface ProblemDetail
 {
 
@@ -16,8 +18,9 @@ interface ProblemDetail
 
 	/**
 	 * @param bool $sanitize Indicates whether the result should be sanitized before being returned.
+	 * @param (callable(Stringable): string)|null $stringify Optional callback to stringify Stringable objects in the details.
 	 * @return mixed[]
 	 */
-	public function toArray(bool $sanitize = true): array;
+	public function toArray(bool $sanitize = true, ?callable $stringify = null): array;
 
 }

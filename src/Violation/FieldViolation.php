@@ -2,11 +2,14 @@
 
 namespace Shredio\Problem\Violation;
 
+use Shredio\Problem\Helper\ProblemHelper;
+use Stringable;
+
 final readonly class FieldViolation implements Violation
 {
 
 	/**
-	 * @param list<string> $messages
+	 * @param list<string|Stringable> $messages
 	 */
 	public function __construct(
 		public string $field,
@@ -18,11 +21,11 @@ final readonly class FieldViolation implements Violation
 	/**
 	 * @return mixed[]
 	 */
-	public function toArray(): array
+	public function toArray(?callable $stringify = null): array
 	{
 		return [
 			'field' => $this->field,
-			'messages' => $this->messages,
+			'messages' => ProblemHelper::stringifyStringables($this->messages, $stringify),
 		];
 	}
 
