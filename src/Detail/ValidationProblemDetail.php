@@ -44,7 +44,7 @@ final readonly class ValidationProblemDetail implements ProblemDetail
 			'@type' => $this->getType(),
 			'severity' => $this->severity->value,
 			'violations' => array_map(
-				fn (Violation $violation): array => $violation->toArray($stringify),
+				fn (Violation $violation): array => $violation->toArray($sanitize, $stringify),
 				$this->violations,
 			),
 		];

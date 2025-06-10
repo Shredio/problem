@@ -41,7 +41,7 @@ final readonly class BadRequestProblemDetail implements ProblemDetail
 		return [
 			'@type' => $this->getType(),
 			'violations' => array_map(
-				fn (Violation $violation): array => $violation->toArray($stringify),
+				fn (Violation $violation): array => $violation->toArray($sanitize, $stringify),
 				$this->violations,
 			),
 		];
