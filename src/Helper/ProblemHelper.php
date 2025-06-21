@@ -13,7 +13,7 @@ final readonly class ProblemHelper
 	 * @param (callable(Stringable): string)|null $stringify
 	 * @return list<string>
 	 */
-	public static function stringifyMessages(array $messages, bool $sanitize, ?callable $stringify): array
+	public static function stringifyMessages(array $messages, bool $sanitize, ?callable $stringify = null): array
 	{
 		return array_map(
 			static function (string|Stringable|VerboseMessage $message) use ($stringify, $sanitize): string {

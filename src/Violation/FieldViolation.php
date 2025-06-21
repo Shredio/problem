@@ -30,4 +30,21 @@ final readonly class FieldViolation implements Violation
 		];
 	}
 
+	public function debugString(): string
+	{
+		$str = '';
+		$messages = ProblemHelper::stringifyMessages($this->messages, sanitize: false);
+
+		foreach ($messages as $message) {
+			$str .= sprintf(
+				'Field "%s": %s%s',
+				$this->field,
+				$message,
+				PHP_EOL
+			);
+		}
+
+		return $str;
+	}
+
 }

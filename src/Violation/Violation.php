@@ -13,4 +13,6 @@ interface Violation
 	 */
 	public function toArray(bool $sanitize = true, ?callable $stringify = null): array;
 
+	public function debugString(): string;
+
 }

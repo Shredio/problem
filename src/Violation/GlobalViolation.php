@@ -28,4 +28,20 @@ final readonly class GlobalViolation implements Violation
 		];
 	}
 
+	public function debugString(): string
+	{
+		$str = '';
+		$messages = ProblemHelper::stringifyMessages($this->messages, sanitize: false);
+
+		foreach ($messages as $message) {
+			$str .= sprintf(
+				'%s%s',
+				$message,
+				PHP_EOL
+			);
+		}
+
+		return $str;
+	}
+
 }
