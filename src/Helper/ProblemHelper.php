@@ -68,12 +68,16 @@ final readonly class ProblemHelper
 			return $surroundWith . $items[0] . $surroundWith;
 		}
 
-		$str = $surroundWith;
-		$str .= implode($surroundWith . ', ' . $surroundWith, array_slice($items, 0, -1));
-		$str .= $surroundWith . ' ';
-		$str .= $conjunction;
+		$isConjunctionEmpty = $conjunction === '';
 
-		return $str . ' ' . $surroundWith . $items[$count - 1] . $surroundWith;
+		$str = $surroundWith;
+		$str .= implode($surroundWith . ', ' . $surroundWith, $isConjunctionEmpty ? $items : array_slice($items, 0, -1));
+		$str .= $surroundWith;
+
+		if ($isConjunctionEmpty) {
+			return $str;
+		}
+		return $str . ' ' . $conjunction . ' ' . $surroundWith . $items[$count - 1] . $surroundWith;
 	}
 
 	/**
