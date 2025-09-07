@@ -11,6 +11,6 @@ interface ViolationAwareException extends Throwable
 	/**
 	 * @return list<Violation>
 	 */
-	public function getViolations(): array;
+	public function getViolations(?string $fieldName = null): array;
 
 }
