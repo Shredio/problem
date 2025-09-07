@@ -5,6 +5,7 @@ namespace Shredio\Problem\Helper;
 use DateTimeInterface;
 use Shredio\Problem\Message\VerboseMessage;
 use Stringable;
+use Symfony\Component\Translation\TranslatableMessage;
 
 final readonly class ProblemHelper
 {
@@ -94,7 +95,14 @@ final readonly class ProblemHelper
 				}
 
 				if ($message instanceof Stringable) {
-					return $stringify ? $stringify($message) : (string) $message;
+					if ($stringify !== null) {
+						return $stringify($message);
+					}
+					if ($message instanceof TranslatableMessage) {
+						return strtr($message->getMessage(), $message->getParameters());
+					}
+
+					return (string) $message;
 				}
 
 				return $message;
