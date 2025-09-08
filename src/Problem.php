@@ -3,6 +3,7 @@
 namespace Shredio\Problem;
 
 use JsonSerializable;
+use Psr\Log\LoggerInterface;
 use Stringable;
 
 final readonly class Problem implements JsonSerializable
@@ -36,6 +37,23 @@ final readonly class Problem implements JsonSerializable
 			'fatal' => $this->fatal,
 			'details' => $details,
 		];
+	}
+
+	/**
+	 * @param 'emergency'|'alert'|'critical'|'error'|'warning'|'notice'|'info'|'debug' $fatalSeverity
+	 * @param 'emergency'|'alert'|'critical'|'error'|'warning'|'notice'|'info'|'debug' $severity
+	 */
+	public function toLogger(
+		LoggerInterface $logger,
+		string $message,
+		string $fatalSeverity = 'error',
+		string $severity = 'warning',
+	): void
+	{
+		$callback = [$logger, $this->fatal ? $fatalSeverity : $severity];
+		$context = $this->toArray(false);
+		unset($context['fatal']);
+		$callback($message, $context);
 	}
 
 	/**
