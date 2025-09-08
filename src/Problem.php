@@ -42,17 +42,21 @@ final readonly class Problem implements JsonSerializable
 	/**
 	 * @param 'emergency'|'alert'|'critical'|'error'|'warning'|'notice'|'info'|'debug' $fatalSeverity
 	 * @param 'emergency'|'alert'|'critical'|'error'|'warning'|'notice'|'info'|'debug' $severity
+	 * @param mixed[] $context
 	 */
 	public function toLogger(
 		LoggerInterface $logger,
 		string $message,
 		string $fatalSeverity = 'error',
 		string $severity = 'warning',
+		array $context = [],
 	): void
 	{
 		$callback = [$logger, $this->fatal ? $fatalSeverity : $severity];
-		$context = $this->toArray(false);
-		unset($context['fatal']);
+		$problem = $this->toArray(false);
+		unset($problem['fatal']);
+		$context['problem'] = $problem;
+
 		$callback($message, $context);
 	}
 
