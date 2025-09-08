@@ -30,7 +30,7 @@ final readonly class FieldViolation implements Violation
 		];
 	}
 
-	public function debugString(): string
+	public function debugString(string $separator = "\n"): string
 	{
 		$str = '';
 		$messages = ProblemHelper::stringifyMessages($this->messages, sanitize: false);
@@ -40,7 +40,7 @@ final readonly class FieldViolation implements Violation
 				'Field "%s": %s%s',
 				$this->field,
 				$message,
-				PHP_EOL
+				$separator,
 			);
 		}
 

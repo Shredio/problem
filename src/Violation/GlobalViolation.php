@@ -28,7 +28,7 @@ final readonly class GlobalViolation implements Violation
 		];
 	}
 
-	public function debugString(): string
+	public function debugString(string $separator = "\n"): string
 	{
 		$str = '';
 		$messages = ProblemHelper::stringifyMessages($this->messages, sanitize: false);
@@ -37,7 +37,7 @@ final readonly class GlobalViolation implements Violation
 			$str .= sprintf(
 				'%s%s',
 				$message,
-				PHP_EOL
+				$separator,
 			);
 		}
 
