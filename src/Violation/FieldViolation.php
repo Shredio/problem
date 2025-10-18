@@ -48,7 +48,7 @@ final readonly class FieldViolation implements Violation
 			);
 		}
 
-		return $str;
+		return rtrim($str);
 	}
 
 }

@@ -41,7 +41,7 @@ final readonly class GlobalViolation implements Violation
 			);
 		}
 
-		return $str;
+		return rtrim($str);
 	}
 
 }
