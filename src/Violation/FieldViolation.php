@@ -9,14 +9,18 @@ use Stringable;
 final readonly class FieldViolation implements Violation
 {
 
+	public string $field;
+
 	/**
+	 * @param string|list<string|int> $field
 	 * @param list<string|Stringable|VerboseMessage> $messages
 	 */
 	public function __construct(
-		public string $field,
+		string|array $field,
 		public array $messages,
 	)
 	{
+		$this->field = is_string($field) ? $field : implode('.', $field);
 	}
 
 	/**
