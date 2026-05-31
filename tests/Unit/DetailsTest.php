@@ -12,8 +12,8 @@ final class DetailsTest extends TestCase
 	public function testFieldViolations(): void
 	{
 		$detail = new ValidationProblemDetail([
-			new FieldViolation('name', ['Name is required']),
-			new FieldViolation('email', ['Email is invalid']),
+			new FieldViolation(['name'], ['Name is required']),
+			new FieldViolation(['email'], ['Email is invalid']),
 		]);
 
 		$this->assertSame([
@@ -21,11 +21,11 @@ final class DetailsTest extends TestCase
 			'severity' => 'error',
 			'violations' => [
 				[
-					'field' => 'name',
+					'field' => ['name'],
 					'messages' => ['Name is required'],
 				],
 				[
-					'field' => 'email',
+					'field' => ['email'],
 					'messages' => ['Email is invalid'],
 				],
 			],

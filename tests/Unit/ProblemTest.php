@@ -33,7 +33,7 @@ final class ProblemTest extends TestCase
 			'The request was invalid',
 			new ProblemDetails([
 				new ValidationProblemDetail([
-					new FieldViolation('name', ['Name is required']),
+					new FieldViolation(['name'], ['Name is required']),
 				]),
 			]),
 		);
@@ -47,7 +47,7 @@ final class ProblemTest extends TestCase
 				'severity' => 'error',
 				'violations' => [
 					[
-						'field' => 'name',
+						'field' => ['name'],
 						'messages' => ['Name is required'],
 					],
 				],

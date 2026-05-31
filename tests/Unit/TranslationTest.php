@@ -13,7 +13,7 @@ final class TranslationTest extends TestCase
 	public function testTranslatableMessage(): void
 	{
 		$builder = new ValidationProblemBuilder();
-		$builder->addFieldViolation('email', [new TranslatableMessage('validation.email.invalid')]);
+		$builder->addFieldViolation(['email'], [new TranslatableMessage('validation.email.invalid')]);
 		$problem = $builder->build();
 
 		$this->assertSame([
@@ -26,7 +26,7 @@ final class TranslationTest extends TestCase
 					'severity' => 'error',
 					'violations' => [
 						[
-							'field' => 'email',
+							'field' => ['email'],
 							'messages' => [
 								'validation.email.invalid',
 							],
@@ -40,7 +40,7 @@ final class TranslationTest extends TestCase
 	public function testStringify(): void
 	{
 		$builder = new ValidationProblemBuilder();
-		$builder->addFieldViolation('email', [new TranslatableMessage('validation.email.invalid')]);
+		$builder->addFieldViolation(['email'], [new TranslatableMessage('validation.email.invalid')]);
 		$problem = $builder->build();
 
 		$stringify = static function (Stringable $message): string {
@@ -57,7 +57,7 @@ final class TranslationTest extends TestCase
 					'severity' => 'error',
 					'violations' => [
 						[
-							'field' => 'email',
+							'field' => ['email'],
 							'messages' => [
 								'Translated: validation.email.invalid',
 							],

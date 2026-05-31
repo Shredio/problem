@@ -35,10 +35,11 @@ final class BadRequestProblemBuilder
 	}
 
 	/**
+	 * @param list<string|int> $field
 	 * @param list<string|Stringable> $messages
 	 */
 	public function addFieldViolation(
-		string $field,
+		array $field,
 		array $messages,
 	): self
 	{

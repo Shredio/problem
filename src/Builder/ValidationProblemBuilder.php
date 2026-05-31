@@ -38,10 +38,11 @@ final class ValidationProblemBuilder
 	}
 
 	/**
+	 * @param list<string|int> $field
 	 * @param list<string|Stringable> $messages
 	 */
 	public function addFieldViolation(
-		string $field,
+		array $field,
 		array $messages,
 		ValidationSeverity $severity = ValidationSeverity::Error,
 	): self
