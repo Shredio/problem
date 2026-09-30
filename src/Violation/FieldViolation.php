@@ -5,13 +5,14 @@ namespace Shredio\Problem\Violation;
 use Shredio\Problem\Helper\ProblemHelper;
 use Shredio\Problem\Message\VerboseMessage;
 use Stringable;
+use Symfony\Contracts\Translation\TranslatableInterface;
 
 final readonly class FieldViolation implements Violation
 {
 
 	/**
 	 * @param list<string|int> $field
-	 * @param list<string|Stringable|VerboseMessage> $messages
+	 * @param list<string|Stringable|TranslatableInterface|VerboseMessage> $messages
 	 */
 	public function __construct(
 		public array $field,

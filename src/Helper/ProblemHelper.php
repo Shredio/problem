@@ -5,13 +5,16 @@ namespace Shredio\Problem\Helper;
 use DateTimeInterface;
 use Shredio\Problem\Message\VerboseMessage;
 use Stringable;
-use Symfony\Component\Translation\TranslatableMessage;
+use Symfony\Contracts\Translation\TranslatableInterface;
 
 final readonly class ProblemHelper
 {
 
 	private const int JsonEncodeOptions = JSON_PRESERVE_ZERO_FRACTION | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR;
 	private const int MaxStringLength = 40;
+
+	/** A message is written in English, so its plural forms follow English rules whatever the process locale is. */
+	private const string SourceLocale = 'en';
 
 	public static function describeValue(mixed $value): string
 	{
@@ -82,33 +85,43 @@ final readonly class ProblemHelper
 	}
 
 	/**
-	 * @param list<string|Stringable|VerboseMessage> $messages
-	 * @param (callable(Stringable): string)|null $stringify
+	 * @param list<string|Stringable|TranslatableInterface|VerboseMessage> $messages
+	 * @param (callable(Stringable|TranslatableInterface): string)|null $stringify
 	 * @return list<string>
 	 */
 	public static function stringifyMessages(array $messages, bool $sanitize, ?callable $stringify = null): array
 	{
 		return array_map(
-			static function (string|Stringable|VerboseMessage $message) use ($stringify, $sanitize): string {
+			static function (string|Stringable|TranslatableInterface|VerboseMessage $message) use ($stringify, $sanitize): string {
 				if ($message instanceof VerboseMessage) {
 					$message = $sanitize ? $message->message : $message->debugMessage;
 				}
 
-				if ($message instanceof Stringable) {
-					if ($stringify !== null) {
-						return $stringify($message);
-					}
-					if ($message instanceof TranslatableMessage) {
-						return strtr($message->getMessage(), $message->getParameters());
-					}
-
-					return (string) $message;
+				if ($stringify !== null && !is_string($message)) {
+					return $stringify($message);
 				}
 
-				return $message;
+				return self::stringifyMessage($message);
 			},
 			$messages,
 		);
+	}
+
+	/**
+	 * Turns a message into text without a translator: a translatable message becomes the message itself with
+	 * its parameters substituted, since only the caller knows the translator and the locale.
+	 */
+	public static function stringifyMessage(string|Stringable|TranslatableInterface $message): string
+	{
+		if (is_string($message)) {
+			return $message;
+		}
+
+		if ($message instanceof TranslatableInterface) {
+			return $message->trans(new IdentityTranslator(), self::SourceLocale);
+		}
+
+		return (string) $message;
 	}
 
 }

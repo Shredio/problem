@@ -12,7 +12,7 @@ CI runs PHPStan on PHP 8.3 and the test suite on PHP 8.3 + 8.4. Both must pass.
 
 ## Architecture
 
-`shredio/problem` is a small, dependency-light library (only `psr/log`; `symfony/translation` is dev-only) for building structured, serializable error payloads — think RFC 7807-style "problem details" for API responses. Everything is immutable value objects assembled through fluent builders.
+`shredio/problem` is a small, dependency-light library (only `psr/log` and `symfony/translation-contracts`; `symfony/translation` is dev-only) for building structured, serializable error payloads — think RFC 7807-style "problem details" for API responses. Everything is immutable value objects assembled through fluent builders.
 
 The data model is a fixed three-level hierarchy:
 
@@ -25,7 +25,7 @@ The data model is a fixed three-level hierarchy:
 This is the central cross-cutting concern — every `toArray()` down the tree threads two arguments:
 
 - **`bool $sanitize`** (default `true`): production-safe output. When true, sensitive details are skipped entirely (`ProblemDetails`), and `VerboseMessage` resolves to its public `message` rather than its `debugMessage`. Pass `false` for internal/debug contexts (e.g. `toLogger()` calls `toArray(false)`).
-- **`(callable(Stringable): string)|null $stringify`**: optional hook to render `Stringable` messages. When omitted, `TranslatableMessage` is resolved via `strtr`, otherwise plain `(string)` casting is used (see `ProblemHelper::stringifyMessages`).
+- **`(callable(Stringable|TranslatableInterface): string)|null $stringify`**: optional hook to render every non-string message - the place to translate a `TranslatableInterface` one. When omitted, `ProblemHelper::stringifyMessage()` renders it: a translatable message becomes its English source text with the parameters substituted (by English plural rules, whatever the process locale), anything else is cast with `(string)`. Symfony 8 dropped `TranslatableMessage::__toString()`, so a translatable message is not `Stringable`: messages are typed `string|Stringable|TranslatableInterface`.
 
 When adding a new `ProblemDetail` or `Violation`, propagate both parameters unchanged through `toArray()`.
 
@@ -35,7 +35,7 @@ When adding a new `ProblemDetail` or `Violation`, propagate both parameters unch
 
 ### Messages
 
-`VerboseMessage` is a `Stringable` pair of `message` (public) + `debugMessage` (internal), selected by the `$sanitize` flag. `ProblemHelper` also offers presentation helpers: `describeValue()` (safe, truncated rendering of arbitrary values for error text), `humanImplode()`, and `stringifyMessages()`.
+`VerboseMessage` is a `Stringable` pair of `message` (public) + `debugMessage` (internal), selected by the `$sanitize` flag. `ProblemHelper` also offers presentation helpers: `describeValue()` (safe, truncated rendering of arbitrary values for error text), `humanImplode()`, `stringifyMessages()` and `stringifyMessage()`.
 
 `Violation::debugString($separator)` produces a human-readable, never-sanitized rendering for logs/exceptions.
 

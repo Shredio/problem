@@ -5,6 +5,7 @@ namespace Shredio\Problem;
 use JsonSerializable;
 use Psr\Log\LoggerInterface;
 use Stringable;
+use Symfony\Contracts\Translation\TranslatableInterface;
 
 final readonly class Problem implements JsonSerializable
 {
@@ -20,7 +21,7 @@ final readonly class Problem implements JsonSerializable
 
 	/**
 	 * @param bool $sanitize Indicates whether the result should be sanitized before being returned.
-	 * @param (callable(Stringable): string)|null $stringify Optional callback to stringify Stringable objects in the details.
+	 * @param (callable(Stringable|TranslatableInterface): string)|null $stringify Optional callback to stringify Stringable and translatable messages in the details.
 	 * @return mixed[]
 	 */
 	public function toArray(bool $sanitize = true, ?callable $stringify = null): array

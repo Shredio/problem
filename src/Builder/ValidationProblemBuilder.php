@@ -10,6 +10,7 @@ use Shredio\Problem\Violation\FieldViolation;
 use Shredio\Problem\Violation\GlobalViolation;
 use Shredio\Problem\Violation\Violation;
 use Stringable;
+use Symfony\Contracts\Translation\TranslatableInterface;
 
 final class ValidationProblemBuilder
 {
@@ -39,7 +40,7 @@ final class ValidationProblemBuilder
 
 	/**
 	 * @param list<string|int> $field
-	 * @param list<string|Stringable> $messages
+	 * @param list<string|Stringable|TranslatableInterface> $messages
 	 */
 	public function addFieldViolation(
 		array $field,
@@ -56,7 +57,7 @@ final class ValidationProblemBuilder
 	}
 
 	/**
-	 * @param list<string|Stringable> $messages
+	 * @param list<string|Stringable|TranslatableInterface> $messages
 	 */
 	public function addViolation(
 		array $messages,

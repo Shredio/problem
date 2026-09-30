@@ -9,6 +9,7 @@ use Shredio\Problem\Violation\FieldViolation;
 use Shredio\Problem\Violation\GlobalViolation;
 use Shredio\Problem\Violation\Violation;
 use Stringable;
+use Symfony\Contracts\Translation\TranslatableInterface;
 
 final class BadRequestProblemBuilder
 {
@@ -36,7 +37,7 @@ final class BadRequestProblemBuilder
 
 	/**
 	 * @param list<string|int> $field
-	 * @param list<string|Stringable> $messages
+	 * @param list<string|Stringable|TranslatableInterface> $messages
 	 */
 	public function addFieldViolation(
 		array $field,
@@ -52,7 +53,7 @@ final class BadRequestProblemBuilder
 	}
 
 	/**
-	 * @param list<string|Stringable> $messages
+	 * @param list<string|Stringable|TranslatableInterface> $messages
 	 */
 	public function addViolation(
 		array $messages,
